@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindIt - College Lost and Found</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic layout and styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .logo {
+            font-size: 36px;
+            text-transform: uppercase;
+            color: white;
+            letter-spacing: 2px;
+        }
+
+        .auth-page,
+        .home-page {
+            display: none;
+        }
+
+        .auth-page {
+            display: block;
+            padding: 50px 0;
+        }
+
+        #login-signup-container {
+            max-width: 450px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .auth-section h3 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        form input,
+        form button {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: 16px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        form input:focus,
+        form button:focus {
+            outline: none;
+            border: 1px solid #4CAF50;
+        }
+
+        form button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .cta-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #45a049;
+        }
+
+        .hero {
+            text-align: center;
+            background-color: #4CAF50;
+            padding: 80px 20px;
+            color: white;
+            border-radius: 0 0 20px 20px;
+        }
+
+        #lost-found {
+            padding: 50px 0;
+            text-align: center;
+            background-color: #f9f9f9;
+            border-radius: 20px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            margin: 10px 0;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .points-section {
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .chat-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .chat-btn:hover {
+            background: #45a049;
+        }
+
+        #chat-container {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        #chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #chat-messages {
+            height: 150px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .chat-message {
+            background: #e2e2e2;
+            padding: 8px;
+            border-radius: 5px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        #chat-input-container input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        #chat-input-container button {
+            padding: 12px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #chat-input-container button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">FindIt</div>
+    </header>
+
+    <!-- Sign Up / Sign In Page -->
+    <div id="auth-page" class="auth-page">
+        <h2 style="text-align: center;">Welcome to FindIt - Lost and Found</h2>
+        <div id="login-signup-container">
+            <!-- Login Section -->
+            <div id="login-section" class="auth-section">
+                <h3>Login</h3>
+                <form id="login-form">
+                    <input type="text" id="login-username" placeholder="Email or Phone Number" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button type="submit" class="submit-btn">Login</button>
+                </form>
+                <p>Don't have an account? <span id="switch-to-signup" style="color: #4CAF50; cursor: pointer;">Sign Up</span></p>
+            </div>
+
+            <!-- Sign Up Section -->
+            <div id="signup-section" class="auth-section hidden">
+                <h3>Sign Up</h3>
+                <form id="signup-form">
+                    <input type="text" id="signup-name" placeholder="Full Name" required>
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                    <input type="tel" id="signup-phone" placeholder="Phone Number" required>
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                    <input type="password" id="signup-confirm-password" placeholder="Confirm Password" required>
+                    <button type="submit" class="submit-btn">Sign Up</button>
+                </form>
+                <p>Already have an account? <span id="switch-to-login" style="color: #4CAF50; cursor: pointer;">Login</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Home Page after Sign Up / Login -->
+    <div id="home-page" class="home-page">
+        <div class="hero">
+            <h1>Welcome to FindIt</h1>
+            <p>Your college's lost and found solution</p>
+            <a href="#lost-found" class="cta-button">Report or Find an Item</a>
+        </div>
+
+        <!-- Report & Find Item -->
+        <section id="lost-found">
+            <h2>Lost & Found Items</h2>
+            <div>
+                <button class="submit-btn" id="report-btn">Report an Item</button>
+                <button class="submit-btn" id="found-btn">Found an Item</button>
+            </div>
+
+            <h2>Your Rewards</h2>
+            <div class="points-section">
+                <p>Your Points: <span id="points-display">0</span></p>
+                <button class="submit-btn" id="claim-item-btn">Claim Item</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Chat -->
+    <div id="chat-container" class="hidden">
+        <div id="chat-header">
+            <h3>Chat Support</h3>
+            <button id="close-chat">&times;</button>
+        </div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type your message...">
+            <button id="send-message">Send</button>
+        </div>
+    </div>
+    <button id="open-chat" class="chat-btn">Chat</button>
+
+    <script>
+        // Switching between login and signup forms
+        document.getElementById("switch-to-signup").addEventListener("click", function () {
+            document.getElementById("login-section").classList.add("hidden");
+            document.getElementById("signup-section").classList.remove("hidden");
+        });
+
+        document.getElementById("switch-to-login").addEventListener("click", function () {
+            document.getElementById("signup-section").classList.add("hidden");
+            document.getElementById("login-section").classList.remove("hidden");
+        });
+
+        // User Authentication Logic
+        document.getElementById("login-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const email = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            const user = users.find(user => user.email === email && user.password === password);
+            if (user) {
+                localStorage.setItem("currentUser", JSON.stringify(user));
+                alert("Login Successful!");
+                showHomePage();
+            } else {
+                alert("Invalid credentials");
+            }
+        });
+
+        document.getElementById("signup-form").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("signup-name").value;
+            const email = document.getElementById("signup-email").value;
+            const phone = document.getElementById("signup-phone").value;
+            const password = document.getElementById("signup-password").value;
+            const confirmPassword = document.getElementById("signup-confirm-password").value;
+
+            if (password === confirmPassword) {
+                let users = JSON.parse(localStorage.getItem("users")) || [];
+                users.push({ name, email, phone, password, points: 0 });
+                localStorage.setItem("users", JSON.stringify(users));
+                alert("Sign Up Successful!");
+                showHomePage();
+            } else {
+                alert("Passwords do not match.");
+            }
+        });
+
+        // Show Home Page after login/signup
+        function showHomePage() {
+            document.getElementById("auth-page").classList.add("hidden");
+            document.getElementById("home-page").classList.remove("hidden");
+        }
+
+        // Claim Item and Add Points
+        document.getElementById("claim-item-btn").addEventListener("click", function () {
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+            if (currentUser) {
+                currentUser.points += 50; // Adding 50 points when an item is claimed
+                localStorage.setItem("currentUser", JSON.stringify(currentUser));
+                document.getElementById("points-display").textContent = currentUser.points;
+                alert("Item claimed! You earned 50 points.");
+            } else {
+                alert("Please log in to claim items.");
+            }
+        });
+
+        // Open Chat
+        document.getElementById("open-chat").addEventListener("click", function () {
+            document.getElementById("chat-container").classList.remove("hidden");
+        });
+
+        // Close Chat
+        document.getElementById("close-chat").addEventListener("click", function () {
+            document.getElementById("chat-container").classList.add("hidden");
+        });
+
+        // Send Chat Message
+        document.getElementById("send-message").addEventListener("click", function () {
+            const message = document.getElementById("chat-input").value;
+            if (message) {
+                const chatMessages = document.getElementById("chat-messages");
+                const newMessage = document.createElement("div");
+                newMessage.classList.add("chat-message");
+                newMessage.innerText = message;
+                chatMessages.appendChild(newMessage);
+                document.getElementById("chat-input").value = '';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+        });
+    </script>
+</body>
+
+</html>
